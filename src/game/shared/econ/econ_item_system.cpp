@@ -95,7 +95,7 @@ CEconItemSystem::~CEconItemSystem( void )
 void CEconItemSystem::Init( void )
 {
 #ifdef USES_ECON_ITEMS
-	ParseItemSchemaFile( "scripts/items/items_game.txt" );
+	ParseItemSchemaFile( "scripts/items/items_game_mod_tf.txt" );
 #endif // USES_ECON_ITEMS
 }
 
@@ -434,7 +434,7 @@ bool IDelayedSchemaData::InitializeSchemaInternal( CEconItemSchema *pItemSchema,
 		// Try to fall-back to the local copy.
 		Msg( "Falling back to item schema from local file.\n" );
 		KeyValuesAD pItemsGameKV( "ItemsGameFile" );
-		if ( pItemsGameKV->LoadFromFile( g_pFullFileSystem, "scripts/items/items_game.txt", "GAME" ) )
+		if ( pItemsGameKV->LoadFromFile( g_pFullFileSystem, "scripts/items/items_game_mod_tf.txt", "GAME" ) )
 		{
 			CUtlBuffer buffer;
 			pItemsGameKV->WriteAsBinary( buffer );
@@ -535,16 +535,16 @@ public:
 		GCSDK::CProtoBufMsg< CMsgUpdateItemSchema > msg( pNetPacket );
 
 #if ( defined( GAME_DLL ) || defined( CLIENT_DLL ) ) && ( defined( _DEBUG ) || defined( STAGING_ONLY ) )
-		const bool bUseGCCopy = items_game_use_gc_copy.GetBool();
+		const bool bUseGCCopy = false;
 #else
-		const bool bUseGCCopy = true;
+		const bool bUseGCCopy = false;
 #endif
 
 		if ( bUseGCCopy == false && k_EUniversePublic != GetUniverse() )
 		{
 			Msg( "Loading item schema from local file.\n" );
 			KeyValuesAD pItemsGameKV( "ItemsGameFile" );
-			if ( pItemsGameKV->LoadFromFile( g_pFullFileSystem, "scripts/items/items_game.txt", "GAME" ) )
+			if ( pItemsGameKV->LoadFromFile( g_pFullFileSystem, "scripts/items/items_game_mod_tf.txt", "GAME" ) )
 			{
 				CUtlBuffer buffer;
 				pItemsGameKV->WriteAsBinary( buffer );
